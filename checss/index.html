@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checss</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: bisque;
+        }
+
+        .board {
+            width: min(100dvw, 100dvh);
+            height: min(100dvw, 100dvh);
+            margin: auto;
+
+            background-color: #FFF;
+            background-size: min(25dvw, 25dvh) min(25dvw, 25dvh);
+            background-position: 0 0, min(12.5dvw, 12.5dvh) min(12.5dvw, 12.5dvh);
+            background-image: linear-gradient(45deg, #779954 25.25%, transparent 25%, transparent 75%, #779954 74.75%, #779954),
+                linear-gradient(45deg, #779954 25.25%, transparent 25%, transparent 75%, #779954 74.75%, #779954);
+
+            display: grid;
+            grid-template-columns: repeat(8, auto);
+
+        }
+
+        .piece {
+            width: calc(min(100dvw, 100dvh)/8);
+            height: calc(min(100dvw, 100dvh)/8);
+
+            text-align: center;
+            line-height: calc(min(100dvw, 100dvh)/8);
+            font-size: calc(min(100dvw, 100dvh)/8);
+        }
+
+        .piece:hover {
+            background-color: aqua;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="board">
+        <div class="piece">♜</div>
+        <div class="piece">♞</div>
+        <div class="piece">♝</div>
+        <div class="piece">♛</div>
+        <div class="piece">♚</div>
+        <div class="piece">♝</div>
+        <div class="piece">♞</div>
+        <div class="piece">♜</div>
+        <div class="piece">♟︎</div>
+        <div class="piece">♟︎</div>
+        <div class="piece">♟︎</div>
+        <div class="piece">♟︎</div>
+        <div class="piece">♟︎</div>
+        <div class="piece">♟︎</div>
+        <div class="piece">♟︎</div>
+        <div class="piece">♟︎</div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece">♙</div>
+        <div class="piece">♙</div>
+        <div class="piece">♙</div>
+        <div class="piece">♙</div>
+        <div class="piece">♙</div>
+        <div class="piece">♙</div>
+        <div class="piece">♙</div>
+        <div class="piece">♙</div>
+        <div class="piece">♖</div>
+        <div class="piece">♘</div>
+        <div class="piece">♗</div>
+        <div class="piece">♕</div>
+        <div class="piece">♔</div>
+        <div class="piece">♗</div>
+        <div class="piece">♘</div>
+        <div class="piece">♖</div>
+    </div>
+</body>
+
+</html>

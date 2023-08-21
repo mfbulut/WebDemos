@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Platformer</title>
+  <style>
+    body {
+      background-color: black;
+    }
+
+    .container {
+      display: flex;
+      gap: 12px;
+    }
+
+    .container canvas {
+      background-color: aliceblue;
+      transition: width 0.5s ease;
+      border-radius: 12px;
+      width: calc(15% - 12px);
+      height: 100%;
+    }
+
+    canvas.current {
+      transition: width 0.5s ease;
+      width: 40%;
+    }
+
+    #visualizer {
+      position: fixed;
+      bottom: 0;
+      width: 100vw;
+      height: 20vh;
+    }
+
+    .hide {
+      display: none;
+    }
+
+    .winscreen {
+      font-size: xx-large;
+      color: white;
+      text-align: center;
+      width: calc(40% - 12px);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <canvas id="screen0" width="1024" height="1024"></canvas>
+    <canvas id="screen1" width="1024" height="1024"></canvas>
+    <canvas id="screen2" width="1024" height="1024"></canvas>
+    <canvas id="screen3" width="1024" height="1024"></canvas>
+    <canvas id="screen4" width="1024" height="1024"></canvas>
+    <div class="hide winscreen">
+      <h1>You Win</h1>
+    </div>
+  </div>
+  <canvas id="visualizer"></canvas>
+  <script src="js/visualizer.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/platformer.js"></script>
+  <script>
+    let current = 0;
+    const screens = [
+      document.getElementById("screen0"),
+      document.getElementById("screen1"),
+      document.getElementById("screen2"),
+      document.getElementById("screen3"),
+      document.getElementById("screen4"),
+    ];
+
+    const next = () => {
+      screens[current].classList.remove("current");
+      current += 1;
+      if (current >= 5) {
+        document.querySelector(".winscreen").classList.remove("hide");
+      }
+      screens[current].classList.add("current");
+      new Game(screens[current], next).run();
+    };
+
+    screens[0].classList.add("current");
+    new Game(screens[0], next).run();
+  </script>
+</body>
+
+</html>

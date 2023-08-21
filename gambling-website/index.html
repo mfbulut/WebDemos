@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+    body {
+      margin: 0;
+      background-color: black;
+      color: aliceblue;
+    }
+    .container {
+      height: 100%;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .canvas {
+      width: 50%;
+      margin-top: 2rem;
+    }
+
+    @import url("https://fonts.googleapis.com/css?family=Raleway");
+    :root {
+      --glow-color: hsl(186 100% 69%);
+    }
+
+    .glowing-btn {
+      position: relative;
+      color: var(--glow-color);
+      cursor: pointer;
+      padding: 0.35em 1em;
+      border: 0.15em solid var(--glow-color);
+      border-radius: 0.45em;
+      background: none;
+      perspective: 2em;
+      font-family: "Raleway", sans-serif;
+      font-size: 2em;
+      font-weight: 900;
+      letter-spacing: 1em;
+
+      -webkit-box-shadow: inset 0px 0px 0.5em 0px var(--glow-color),
+        0px 0px 0.5em 0px var(--glow-color);
+      -moz-box-shadow: inset 0px 0px 0.5em 0px var(--glow-color),
+        0px 0px 0.5em 0px var(--glow-color);
+      box-shadow: inset 0px 0px 0.5em 0px var(--glow-color),
+        0px 0px 0.5em 0px var(--glow-color);
+      animation: border-flicker 2s linear infinite;
+      margin-top: 3rem;
+    }
+
+    .glowing-txt {
+      float: left;
+      margin-right: -0.8em;
+      -webkit-text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3),
+        0 0 0.45em var(--glow-color);
+      -moz-text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3),
+        0 0 0.45em var(--glow-color);
+      text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3),
+        0 0 0.45em var(--glow-color);
+      animation: text-flicker 3s linear infinite;
+    }
+
+    .faulty-letter {
+      opacity: 0.5;
+      animation: faulty-flicker 2s linear infinite;
+    }
+
+    .glowing-btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      opacity: 0.7;
+      filter: blur(1em);
+      transform: translateY(120%) rotateX(95deg) scale(1, 0.35);
+      background: var(--glow-color);
+      pointer-events: none;
+    }
+
+    .glowing-btn::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0;
+      z-index: -1;
+      background-color: var(--glow-color);
+      box-shadow: 0 0 2em 0.2em var(--glow-color);
+      transition: opacity 100ms linear;
+    }
+
+    .glowing-btn:hover {
+      color: rgba(0, 0, 0, 0.8);
+      text-shadow: none;
+      animation: none;
+    }
+
+    .glowing-btn:hover .glowing-txt {
+      animation: none;
+    }
+
+    .glowing-btn:hover .faulty-letter {
+      animation: none;
+      text-shadow: none;
+      opacity: 1;
+    }
+
+    .glowing-btn:hover:before {
+      filter: blur(1.5em);
+      opacity: 1;
+    }
+
+    .glowing-btn:hover:after {
+      opacity: 1;
+    }
+
+    @keyframes faulty-flicker {
+      0% {
+        opacity: 0.1;
+      }
+      2% {
+        opacity: 0.1;
+      }
+      4% {
+        opacity: 0.5;
+      }
+      19% {
+        opacity: 0.5;
+      }
+      21% {
+        opacity: 0.1;
+      }
+      23% {
+        opacity: 1;
+      }
+      80% {
+        opacity: 0.5;
+      }
+      83% {
+        opacity: 0.4;
+      }
+
+      87% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes text-flicker {
+      0% {
+        opacity: 0.1;
+      }
+
+      2% {
+        opacity: 1;
+      }
+
+      8% {
+        opacity: 0.1;
+      }
+
+      9% {
+        opacity: 1;
+      }
+
+      12% {
+        opacity: 0.1;
+      }
+      20% {
+        opacity: 1;
+      }
+      25% {
+        opacity: 0.3;
+      }
+      30% {
+        opacity: 1;
+      }
+
+      70% {
+        opacity: 0.7;
+      }
+      72% {
+        opacity: 0.2;
+      }
+
+      77% {
+        opacity: 0.9;
+      }
+      100% {
+        opacity: 0.9;
+      }
+    }
+
+    @keyframes border-flicker {
+      0% {
+        opacity: 0.1;
+      }
+      2% {
+        opacity: 1;
+      }
+      4% {
+        opacity: 0.1;
+      }
+
+      8% {
+        opacity: 1;
+      }
+      70% {
+        opacity: 0.7;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    :root {
+      --gold: #ffb338;
+      --light-shadow: #77571d;
+      --dark-shadow: #3e2904;
+    }
+
+    .wrapper {
+      background: radial-gradient(#272727, #1b1b1b);
+      display: grid;
+      grid-template-areas: "overlap";
+      place-content: center;
+      text-transform: uppercase;
+      margin-top: -16px;
+      border-radius: 25px;
+      padding: 12px;
+      padding-left: 6rem;
+      padding-right: 6rem;
+    }
+    .wrapper > div {
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: #363833;
+      font-family: "Poppins", sans-serif;
+      font-weight: 900;
+      font-size: 5rem;
+      grid-area: overlap;
+      letter-spacing: 1px;
+      -webkit-text-stroke: 4px transparent;
+    }
+    div.bg {
+      background-image: repeating-linear-gradient(
+        105deg,
+        var(--gold) 0%,
+        var(--dark-shadow) 5%,
+        var(--gold) 12%
+      );
+      color: transparent;
+      filter: drop-shadow(5px 15px 15px black);
+      transform: scaleY(1.075);
+      transform-origin: top;
+    }
+    div.fg {
+      background-image: repeating-linear-gradient(
+        5deg,
+        var(--gold) 0%,
+        var(--light-shadow) 23%,
+        var(--gold) 31%
+      );
+      color: #1e2127;
+      transform: scale(1);
+    }
+
+    .main {
+      width: 100%;
+      margin-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .left {
+      width: 25%;
+    }
+
+    .right {
+      width: 25%;
+    }
+
+    img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+    }
+
+    .right img {
+      width: 75%;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <div class="wrapper">
+        <div class="bg">Current Money <span id="mymoney">100</span></div>
+        <div class="fg">Current Money</div>
+      </div>
+      <div class="main">
+        <div class="left">
+          <img src="keep.jpg" alt="keep gambling" />
+        </div>
+        <div class="canvas">
+          <canvas id="myChart"></canvas>
+        </div>
+        <div class="right">
+          <img src="keep2.webp" alt="keep gambling" />
+        </div>
+      </div>
+
+      <button class="glowing-btn" id="gamblebtn">
+        <span class="glowing-txt"
+          >G<span class="faulty-letter">A</span>MBLE</span
+        >
+      </button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+      const ctx = document.getElementById("myChart");
+
+      let money = 100;
+
+      const DATA_COUNT = 14;
+      const labels = [];
+      for (let i = 0; i < DATA_COUNT; ++i) {
+        labels.push(i.toString());
+      }
+      const datapoints = [
+        0,
+        20,
+        20,
+        60,
+        60,
+        120,
+        0,
+        180,
+        120,
+        125,
+        105,
+        110,
+        170,
+        money,
+      ];
+
+      const datapoints2 = datapoints.map((e, i) => {
+        return e - datapoints[i - 1] || 0;
+      });
+
+      const data = {
+        labels: labels,
+        datasets: [
+          {
+            label: "Money",
+            data: datapoints,
+            borderColor: "white",
+            fill: false,
+            cubicInterpolationMode: "monotone",
+            tension: 0.4,
+          },
+          {
+            label: "Change",
+            data: datapoints2,
+            borderColor: "red",
+            fill: false,
+            cubicInterpolationMode: "monotone",
+            tension: 0.4,
+          },
+        ],
+      };
+
+      const config = {
+        type: "line",
+        data: data,
+        options: {
+          responsive: true,
+          scales: {
+            x: {
+              display: true,
+            },
+            y: {
+              display: true,
+              suggestedMin: -10,
+              suggestedMax: 200,
+            },
+          },
+        },
+      };
+
+      let chart = new Chart(ctx, config);
+
+      let moneydisplay = document.getElementById("mymoney");
+      document.getElementById("gamblebtn").addEventListener("click", () => {
+        if (Math.random() < 0.01) {
+          money *= Math.sqrt(money);
+        }
+
+        if (Math.random() < 0.05) {
+          money *= 2;
+        }
+
+        if (Math.random() < 0.01) {
+          money /= Math.sqrt(money);
+        }
+
+        if (Math.random() < 0.05) {
+          money /= 2;
+        }
+
+        let luck = Math.random() < 0.5 ? 0.8 : -0.5;
+        money = Math.floor(money + money * 0.25 * luck);
+        chart.data.datasets[0].data.push(money);
+        chart.data.datasets[1].data.push(
+          money - chart.data.datasets[1].data.slice(-1)
+        );
+        chart.data.labels.push("a");
+        chart.update();
+        moneydisplay.textContent = money;
+      });
+    </script>
+  </body>
+</html>

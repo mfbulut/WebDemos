@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            background-color: #121212;
+            color: seashell;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --input-border: #8b8a8b;
+            --input-focus-h: 245;
+            --input-focus-s: 100%;
+            --input-focus-l: 42%;
+            --form-control-color: rebeccapurple;
+        }
+
+        input {
+            font-size: 16px;
+            font-size: max(16px, 1em);
+            font-family: inherit;
+            padding: 0.25em 0.5em;
+            background-color: #fff;
+            border: 2px solid var(--input-border);
+            border-radius: 4px;
+            display: block;
+        }
+
+        .input:not(textarea) {
+            line-height: 1;
+            height: 2.25rem;
+            display: inline;
+        }
+
+        input[type="file"] {
+            font-size: 0.9em;
+            padding-top: 0.35rem;
+        }
+
+        input:focus {
+            border-color: hsl(var(--input-focus-h), var(--input-focus-s), var(--input-focus-l));
+        }
+
+        .container {
+            display: grid;
+            place-content: center;
+            grid-template-columns: auto auto;
+            min-height: 100vh;
+        }
+
+        .menu {
+            height: 100%;
+            width: 20vw;
+            background-color: #323232;
+            border-radius: 25px;
+        }
+
+        .selected {
+            background-color: #424242;
+            border-radius: 25px 25px 0px 0px;
+            height: 60%;
+            display: grid;
+            place-content: center;
+            grid-template-columns: 80%;
+        }
+
+        .attribute {
+            margin-bottom: 1rem;
+
+        }
+
+        canvas {
+            margin: 1rem;
+            border: 2px solid #ffffff;
+            background-color: #dfdfdf;
+        }
+
+        .unselectable {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        h3 {
+            word-break: break-all;
+            height: 3rem;
+        }
+
+        input[type="radio"] {
+            appearance: none;
+            background-color: #fff;
+            margin: 0;
+            font: inherit;
+            color: currentColor;
+            width: 1.15em;
+            height: 1.15em;
+            border: 0.15em solid currentColor;
+            border-radius: 50%;
+            transform: translateY(-0.075em);
+            display: grid;
+            place-content: center;
+        }
+
+        input[type="radio"]::before {
+            content: "";
+            width: 0.65em;
+            height: 0.65em;
+            border-radius: 50%;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em var(--form-control-color);
+        }
+
+        input[type="radio"]:checked::before {
+            transform: scale(1);
+        }
+
+        .sprites {
+            display: grid;
+            place-content: start center;
+            grid-template-columns: auto auto;
+            gap: 10px;
+            height: 300px;
+            overflow: auto;
+        }
+
+        ::-webkit-scrollbar {
+            width: 20px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #d6dee1;
+            border-radius: 20px;
+            border: 6px solid transparent;
+            background-clip: content-box;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #a8bbbf;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="menu">
+            <div class="selected">
+                <div class="attribute">
+                    <h3>Selected: <span id="NameDisplay"></span></h3>
+                </div>
+                <div class="attribute">
+                    <label for="PositionX">X Position: <span id="PositionXDisplay"></span></label>
+                    <input type="number" id="PositionX" name="PositionX" step="any">
+                </div>
+                <div class="attribute">
+                    <label for="PositionY">Y Position: <span id="PositionYDisplay"></span></label>
+                    <input type="number" id="PositionY" name="PositionY" step="any">
+                </div>
+                <div class="attribute">
+                    <label for="ImageWidth">Width: <span id="ImageWidthDisplay"></span></label>
+                    <input type="number" id="ImageWidth" name="ImageWidth" step="any">
+                </div>
+                <div class="attribute">
+                    <label for="ImageHeight">Height: <span id="ImageHeightDisplay"></span></label>
+                    <input type="number" id="ImageHeight" name="ImageHeight" step="any">
+                </div>
+                <div>
+                    <input type="file" id="ImageFile" name="ImageFile" accept="image/png, image/jpeg">
+                </div>
+            </div>
+            <fieldset id="sprites" class="sprites unselectable">
+                <input type="radio" value="value1" name="sprites">
+                <input type="radio" value="value2" name="sprites">
+            </fieldset>
+        </div>
+        <canvas id="canvas" width="1280" height="720"></canvas>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

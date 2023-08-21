@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Balls</title>
+    <style>
+      html,
+      body {
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+      }
+      canvas {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="800" height="600"></canvas>
+    <script src="quadtree.min.js"></script>
+    <script src="Vec2.js"></script>
+    <script>
+      let Balls = new Quadtree({
+        x: 0,
+        y: 0,
+        width: 800,
+        height: 600,
+      });
+
+      for (let i = 0; i < 400; i++) {
+        Balls.insert({
+          x: Math.random() * 800,
+          y: Math.random() * 300,
+          width: 8,
+          height: 8,
+
+          color: "red",
+          vx: 0,
+          vy: 0,
+        });
+      }
+
+      const c = document.getElementById("c");
+      const ctx = c.getContext("2d");
+
+      function update(progress) {
+        const elements = Balls.retrieve({
+          x: 0,
+          y: 0,
+          width: 800,
+          height: 800,
+        });
+
+        elements.forEach((ball) => {
+          ball.x += ball.vx;
+          ball.y += ball.vy;
+          ball.y += 1;
+
+          for (let i = 0; i < 4; i++) {
+            ball.y = Math.min(ball.y, c.height - ball.width);
+            elements.forEach((ball2) => {
+              if (ball != ball2) {
+                distance = Math.sqrt(
+                  (ball.x - ball2.x) * (ball.x - ball2.x) +
+                    (ball.y - ball2.y) * (ball.y - ball2.y)
+                );
+                if (distance < ball.width + ball2.width) {
+                  let dir = Vec2.create(
+                    ball.x - ball2.x,
+                    ball.y - ball2.y
+                  ).normalize();
+                  let scale = (16 - distance) / 2.0;
+
+                  ball.x += dir.x * scale;
+                  ball.y += dir.y * scale;
+                  ball2.x -= dir.x * scale;
+                  ball2.y -= dir.y * scale;
+                }
+              }
+            });
+          }
+        });
+
+        ctx.clearRect(0, 0, c.width, c.height);
+        elements.forEach((ball) => {
+          ctx.beginPath();
+          ctx.arc(ball.x, ball.y, ball.width, 0, 2 * Math.PI);
+          ctx.fill();
+        });
+      }
+
+      function loop(timestamp) {
+        let progress = timestamp - lastRender;
+
+        update(progress);
+
+        lastRender = timestamp;
+        window.requestAnimationFrame(loop);
+      }
+      let lastRender = 0;
+      window.requestAnimationFrame(loop);
+    </script>
+  </body>
+</html>
